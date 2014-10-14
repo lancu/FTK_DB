@@ -253,7 +253,7 @@ mysqli_close($dbc);
 
       </fieldset> -->
         
-        <?php   $sex='female';    $country='Mexico'    ?>
+   <!--     <?php   $sex='female';    $country='Mexico'    ?>
         
         <select name="country">
   <option<?= $country == "USA" ? ' selected="selected"' : ''?>>USA</option>
@@ -265,7 +265,7 @@ mysqli_close($dbc);
         <select  name="user[sex]" >
   <option value="male" <?php $sex == "male" ?  "selected" : '' ?>>Male</option>
   <option value="female" <?php $sex == "female" ?  "selected" : '' ?>>Female</option>
-</select>
+</select>-->
       
 
         <fieldset><legend><b> FTK Stuff</b> </legend>
