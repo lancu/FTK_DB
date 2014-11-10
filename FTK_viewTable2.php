@@ -2,12 +2,12 @@
   session_start();
 
   // If the session vars aren't set, try to set them with a cookie
-  if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     if (isset($_COOKIE['user_id']) && isset($_COOKIE['username'])) {
-      $_SESSION['user_id'] = $_COOKIE['user_id'];
-      $_SESSION['username'] = $_COOKIE['username'];
+        $_SESSION['user_id'] = $_COOKIE['user_id'];
+        $_SESSION['username'] = $_COOKIE['username'];
     }
-  }
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -26,11 +26,11 @@
   require_once('connectvars.php');
 
   // Make sure the user is logged in before going any further.
-  if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
     exit();
-  }
-  else {
+} 
+else {
     echo('<p class="login">You are logged in as ' . $_SESSION['username'] . '. <a href="logout.php">Log out</a>.<br /> Go back to the <a href="index.php">Index</a>.</p>');
   }
 

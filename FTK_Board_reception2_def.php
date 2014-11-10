@@ -1,23 +1,23 @@
 <?php function a(){
 
-$table_name = "FTK_parts";
-$column_name = "board_type";
+    $table_name = "FTK_parts";
+    $column_name = "board_type";
 
-echo "<select name=\"$column_name\"><option>Select one</option>";
-$q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+    echo "<select name=\"$column_name\"><option>Select one</option>";
+    $q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
     WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'";
-$r = mysqli_query($dbc, $q);
+    $r = mysqli_query($dbc, $q);
 
-$row = mysqli_fetch_array($r);
+    $row = mysqli_fetch_array($r);
 
-$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
+    $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
 
-foreach($enumList as $value)
+    foreach ($enumList as $value)
     echo "<option value=\"$value\">$value</option>";
-echo "<option value=\" $board_type\"> $board_type</option>";
+    echo "<option value=\" $board_type\"> $board_type</option>";
 
-echo "</select>";
-}
+    echo "</select>";
+      }
 
 ?>
 
@@ -224,7 +224,30 @@ mysqli_close($dbc);
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
     
-
+<fieldset><legend>Search box for scanner </legend>
+    <form method="post">
+            Text that needs to be processed
+            <input type="text" id="text" name="t">
+            <input type="submit" id ="order" name="order">
+            
+        </form>
+     <?php
+            if(isset($_POST['order']))
+            {
+                $parts = explode ("_", $_POST['t']);
+                $board_type = $parts[2];
+                $board_id = $parts[3];
+                //print_r($parts);
+                //print_r($_POST['t']);
+            }
+        ?>
+    
+    
+    <a href="http://www.barcodesinc.com/generator/"><img src="http://www.barcodesinc.com/generator/image.php?code=<?php echo $_POST['t']; ?>&style=196&type=C128B&width=210&height=50&xres=1&font=4" alt="the barcode printer: free barcode generator" border="1"></a> 
+    
+   
+    </fieldset>
+    
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
      
@@ -302,7 +325,8 @@ mysqli_close($dbc);
     <label for="Prod_date">Production date:</label>
     <input type="date" size="10" maxlength="20"  name="Prod_date" value="<?php if (!empty($Prod_date)) echo $Prod_date; ?>" /><br />
             
-            
+            <label  for = "String_long"> Tot numele: </label>
+            <input type="string" /> <br />
     
             
     
