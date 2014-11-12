@@ -1,23 +1,23 @@
 <?php function a(){
 
-    $table_name = "FTK_parts";
-    $column_name = "board_type";
+$table_name = "FTK_parts";
+$column_name = "board_type";
 
-    echo "<select name=\"$column_name\"><option>Select one</option>";
-    $q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+echo "<select name=\"$column_name\"><option>Select one</option>";
+$q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
     WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'";
-    $r = mysqli_query($dbc, $q);
+$r = mysqli_query($dbc, $q);
 
-    $row = mysqli_fetch_array($r);
+$row = mysqli_fetch_array($r);
 
-    $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
+$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
 
-    foreach ($enumList as $value)
+foreach($enumList as $value)
     echo "<option value=\"$value\">$value</option>";
-    echo "<option value=\" $board_type\"> $board_type</option>";
+echo "<option value=\" $board_type\"> $board_type</option>";
 
-    echo "</select>";
-      }
+echo "</select>";
+}
 
 ?>
 
@@ -54,7 +54,6 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     if (isset($_COOKIE['user_id']) && isset($_COOKIE['username'])) {
       $_SESSION['user_id'] = $_COOKIE['user_id'];
       $_SESSION['username'] = $_COOKIE['username'];
-       
     }
   }
 ?>
@@ -225,30 +224,7 @@ mysqli_close($dbc);
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
     
-<fieldset><legend>Search box for scanner </legend>
-    <form method="post">
-            Text that needs to be processed
-            <input type="text" id="text" name="input_test">
-            
-            
-        </form>
-     <?php
-            if(isset($_POST['input_test']))
-            {
-                $parts = explode ("_", $_POST['input_test']);
-                $board_type = $parts[2];
-                $board_id = $parts[3];
-                //print_r($parts);
-                //print_r($_POST['t']);
-            }
-        ?>
-    
-    
-  
-    
-   
-    </fieldset>
-    
+
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
      
@@ -277,7 +253,7 @@ mysqli_close($dbc);
 
       </fieldset> -->
         
-   <!--     <?php   $sex='female';    $country='Mexico'    ?>
+        <?php   $sex='female';    $country='Mexico'    ?>
         
         <select name="country">
   <option<?= $country == "USA" ? ' selected="selected"' : ''?>>USA</option>
@@ -289,7 +265,7 @@ mysqli_close($dbc);
         <select  name="user[sex]" >
   <option value="male" <?php $sex == "male" ?  "selected" : '' ?>>Male</option>
   <option value="female" <?php $sex == "female" ?  "selected" : '' ?>>Female</option>
-</select>-->
+</select>
       
 
         <fieldset><legend><b> FTK Stuff</b> </legend>
@@ -326,8 +302,7 @@ mysqli_close($dbc);
     <label for="Prod_date">Production date:</label>
     <input type="date" size="10" maxlength="20"  name="Prod_date" value="<?php if (!empty($Prod_date)) echo $Prod_date; ?>" /><br />
             
-            <label  for = "String_long"> Tot numele: </label>
-            <input type="string" /> <br />
+            
     
             
     
