@@ -54,6 +54,7 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     if (isset($_COOKIE['user_id']) && isset($_COOKIE['username'])) {
       $_SESSION['user_id'] = $_COOKIE['user_id'];
       $_SESSION['username'] = $_COOKIE['username'];
+       
     }
   }
 ?>
@@ -227,14 +228,14 @@ mysqli_close($dbc);
 <fieldset><legend>Search box for scanner </legend>
     <form method="post">
             Text that needs to be processed
-            <input type="text" id="text" name="t">
-            <input type="submit" id ="order" name="order">
+            <input type="text" id="text" name="input_test">
+            
             
         </form>
      <?php
-            if(isset($_POST['order']))
+            if(isset($_POST['input_test']))
             {
-                $parts = explode ("_", $_POST['t']);
+                $parts = explode ("_", $_POST['input_test']);
                 $board_type = $parts[2];
                 $board_id = $parts[3];
                 //print_r($parts);
@@ -243,7 +244,7 @@ mysqli_close($dbc);
         ?>
     
     
-    <a href="http://www.barcodesinc.com/generator/"><img src="http://www.barcodesinc.com/generator/image.php?code=<?php echo $_POST['t']; ?>&style=196&type=C128B&width=210&height=50&xres=1&font=4" alt="the barcode printer: free barcode generator" border="1"></a> 
+  
     
    
     </fieldset>
