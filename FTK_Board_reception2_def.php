@@ -133,8 +133,8 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
 
 //getting the data into the DB 
 
- $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, active, CERN_receival_date,TEST_date,Prod_date) VALUE 
- ('$board_type ', '$board_id', '$location', '$inst_status', '$active', '$CERN_receival_date','$TEST_date','$Prod_date') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', active='$active', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date'";
+ $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date) VALUE 
+ ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date'";
    
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
