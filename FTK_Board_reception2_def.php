@@ -98,6 +98,8 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $surname_user = mysqli_real_escape_string($dbc, trim($_POST['surname_user']));
     $email_user = mysqli_real_escape_string($dbc, trim($_POST['email_user']));
      
+    
+     
      //ftk added 
     $board_type = mysqli_real_escape_string($dbc, trim($_POST['board_type']));
     
@@ -106,8 +108,18 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $inst_status=mysqli_real_escape_string($dbc, trim($_POST['inst_status']));
     $CERN_receival_date = mysqli_real_escape_string($dbc, trim($_POST['CERN_receival_date']));
     $TEST_date = mysqli_real_escape_string($dbc, trim($_POST['TEST_date']));
-      $Prod_date = mysqli_real_escape_string($dbc, trim($_POST['Prod_date']));
-
+    $Prod_date = mysqli_real_escape_string($dbc, trim($_POST['Prod_date']));
+    $rack = mysqli_real_escape_string($dbc, trim($_POST['rack']));
+    $crate = mysqli_real_escape_string($dbc, trim($_POST['crate']));
+    $slot = mysqli_real_escape_string($dbc, trim($_POST['slot']));
+    $owner = mysqli_real_escape_string($dbc, trim($_POST['owner']));
+    $last_user = mysqli_real_escape_string($dbc, trim($_POST['last_user']));
+    $MB_SN = mysqli_real_escape_string($dbc, trim($_POST['MB_SN']));
+    $MB_Pos = mysqli_real_escape_string($dbc, trim($_POST['MB_Pos']));
+    $Notes = mysqli_real_escape_string($dbc, trim($_POST['Notes']));
+    $FPGA = mysqli_real_escape_string($dbc, trim($_POST['FPGA']));
+    $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
+     
      
      
 
@@ -132,9 +144,10 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
    
 
 //getting the data into the DB 
+     //here I need to add all values
 
- $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date) VALUE 
- ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date'";
+ $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,Notes,FPGA,firmware_version) VALUE 
+ ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$Notes','$FPGA','$firmware_version') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', Notes='$Notes', FPGA='$FPGA', firmware_version='$firmware_version'  "; 
    
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
@@ -171,6 +184,17 @@ echo $row_old;
       $CERN_receival_date =  $row_old['CERN_receival_date'];
       $TEST_date =  $row_old['TEST_date'];
       $Prod_date =  $row_old['Prod_date'];
+      
+       $rack = $row_old['rack'];
+      $crate = $row_old['crate']; 
+      $slot = $row_old['slot'];
+       $owner = $row_old['owner'];
+      $last_user = $row_old['last_user'];
+      $MB_SN = $row_old['MB_SN'];
+      $MB_Pos = $row_old['MB_Pos'];
+      $Notes = $row_old['Notes'];
+      $FPGA = $row_old['FPGA'];
+      $firmware_version = $row_old['firmware_version'];
       
       
       
@@ -253,20 +277,7 @@ mysqli_close($dbc);
 
       </fieldset> -->
         
-        <?php   $sex='female';    $country='Mexico'    ?>
-        
-        <select name="country">
-  <option<?= $country == "USA" ? ' selected="selected"' : ''?>>USA</option>
-  <option<?= $country == "Kanada" ? ' selected="selected"' : ''?>>Kanada</option>
-  <option<?= $country == "Mexico" ? ' selected="selected"' : ''?>>Mexico</option>
-</select>
-        
      
-        <select  name="user[sex]" >
-  <option value="male" <?php $sex == "male" ?  "selected" : '' ?>>Male</option>
-  <option value="female" <?php $sex == "female" ?  "selected" : '' ?>>Female</option>
-</select>
-      
 
         <fieldset><legend><b> FTK Stuff</b> </legend>
     <label for="board_type">Board type:</label>
@@ -301,6 +312,45 @@ mysqli_close($dbc);
     
     <label for="Prod_date">Production date:</label>
     <input type="date" size="10" maxlength="20"  name="Prod_date" value="<?php if (!empty($Prod_date)) echo $Prod_date; ?>" /><br />
+            
+       </fieldset>
+        
+        <fieldset><legend><b> New Variables </b> </legend>
+            
+            <label for="rack">Rack:</label>
+    <input type="varchar" size="10" maxlength="20"  name="rack" value="<?php if (!empty($rack)) echo $rack; ?>" /><br />
+          
+            <label for="crate">Crate:</label>
+    <input type="varchar" size="10" maxlength="20"  name="crate" value="<?php if (!empty($crate)) echo $crate; ?>" /><br />
+            
+            <label for="slot">Slot:</label>
+    <input type="varchar" size="10" maxlength="20"  name="slot" value="<?php if (!empty($slot)) echo $slot; ?>" /><br />
+            
+            <label for="owner">Owner:</label>
+    <input type="varchar" size="10" maxlength="20"  name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" /><br />
+            
+            <label for="last_user">Last change:</label>
+    <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
+            
+            <label for="MB_SN">MB_SN:</label>
+    <input type="varchar" size="10" maxlength="20"  name="MB_SN" value="<?php if (!empty($MB_SN)) echo $MB_SN; ?>" /><br />
+            
+             <label for="MB_Pos">MB_Pos:</label>
+    <input type="smallint" size="1" maxlength="20"  name="MB_Pos" value="<?php if (!empty($MB_Pos)) echo $MB_Pos; ?>" /><br />
+            
+            <label for="FPGA">FPGA:</label>
+    <input type="varchar" size="20" maxlength="20"  name="FPGA" value="<?php if (!empty($FPGA)) echo $FPGA; ?>" /><br />
+            
+            <label for="firmware_version">Firmware Version:</label>
+    <input type="firmware_version" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
+            <label for="Notes">Notes:</label>
+    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" />Test can I write here ?<br />
+            
+            
+            
+            
+            
+            
             
             
     
