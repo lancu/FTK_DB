@@ -64,11 +64,11 @@
     
     <li class="high">Services 
     <ul class="underlist"> 
-      	 <li class="low"><a href="table1.php">Table of all modules</a></li> 
+      	 <li class="low"><a href="table1.php">Ordered table</a></li> 
       	 <!--<li class="low"><a href="editprofile.php">Insert Module Data</a></li>-->
-        <li class="low"><a href="FTK_viewTable2.php">FTK view Table2</a></li>
+        <li class="low"><a href="FTK_viewTable2.php">Table with links </a></li>
          <li class="low"><a href="FTK_viewTable.php">FTK view Table</a></li>
-        <li class="low"><a href="FTK_Board_reception2_def.php">FTK reception</a></li>
+        <li class="low"><a href="FTK_Board_reception2_def.php">FTK board reception</a></li>
          
         
      </ul> 
