@@ -119,17 +119,13 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $Notes = mysqli_real_escape_string($dbc, trim($_POST['Notes']));
     $FPGA = mysqli_real_escape_string($dbc, trim($_POST['FPGA']));
     $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
-     $Status = mysqli_real_escape_string($dbc, trim($_POST['Status']));
      
      
      
 
  
       if ($error) {
-        echo $error ;
-      }
-     
-    
+        echo $error ;}
     //Grab the user data from the DB	
     
     $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
@@ -150,8 +146,8 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
 //getting the data into the DB 
      //here I need to add all values
 
- $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,Notes,FPGA,firmware_version,Status) VALUE 
- ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$Notes','$FPGA','$firmware_version','$Status') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', Notes='$Notes', FPGA='$FPGA', firmware_version='$firmware_version' , Status = '$Status' "; 
+ $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,Notes,FPGA,firmware_version) VALUE 
+ ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$Notes','$FPGA','$firmware_version') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', Notes='$Notes', FPGA='$FPGA', firmware_version='$firmware_version'  "; 
    
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
@@ -178,7 +174,7 @@ $data_old = mysqli_query($dbc, $query_old);
 $row_old = mysqli_fetch_array($data_old);
 
 
-//echo $row_old;
+echo $row_old;
 
   if ($row_old != NULL) {
 	 $board_type = $row_old['board_type'];
@@ -199,7 +195,6 @@ $row_old = mysqli_fetch_array($data_old);
       $Notes = $row_old['Notes'];
       $FPGA = $row_old['FPGA'];
       $firmware_version = $row_old['firmware_version'];
-      $Status   = $row_old['Status'];
       
       
       
@@ -239,8 +234,6 @@ $enumList2 = get_board_types();*/
 
 //Print Table 
 
-
-
 $enumList2=get_board_types($dbc);
 
 mysqli_close($dbc);
@@ -253,7 +246,8 @@ mysqli_close($dbc);
 
 
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />    
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
+    
 
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
@@ -348,9 +342,7 @@ mysqli_close($dbc);
     <input type="varchar" size="20" maxlength="20"  name="FPGA" value="<?php if (!empty($FPGA)) echo $FPGA; ?>" /><br />
             
             <label for="firmware_version">Firmware Version:</label>
-    <input type="varchar" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
-            <label for="Status">Status:</label>
-    <input type="Status" size="10" maxlength="20"  name="Status" value="<?php if (!empty($Status)) echo $Status; ?>" /><br />
+    <input type="firmware_version" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
             <label for="Notes">Notes:</label>
     <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" />Test can I write here ?<br />
             
