@@ -120,9 +120,8 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $FPGA = mysqli_real_escape_string($dbc, trim($_POST['FPGA']));
     $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
      $Status = mysqli_real_escape_string($dbc, trim($_POST['Status']));
-     
-     
-     
+    
+ }
 
  
       if ($error) {
@@ -145,7 +144,7 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
 
    
 
-   
+ 
 
 //getting the data into the DB 
      //here I need to add all values
@@ -161,8 +160,8 @@ if (!$result) {
     echo '<p> More detailed:' . mysqli_error($dbc)  '</p>';*/
  }
  
- }
-     
+ 
+
     
 //Grab data from the DB 
 //here I grab the data in order to print it on the screen. I need another area for filling the data back into the DB. 
