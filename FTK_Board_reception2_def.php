@@ -351,7 +351,7 @@ mysqli_close($dbc);
             <label for="Status">Status:</label>
     <input type="Status" size="10" maxlength="20"  name="Status" value="<?php if (!empty($Status)) echo $Status; ?>" /><br />
             <label for="Notes">Notes:</label>
-    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" />Test can I write here ?<br />
+    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" /><br />
             
             
             

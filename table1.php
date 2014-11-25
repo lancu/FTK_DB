@@ -1,4 +1,4 @@
-//new table form
+
 <?php
 mysql_connect('localhost','root','root') or die(mysql_error());
 mysql_select_db('Test') or die(mysql_error());
@@ -138,4 +138,4 @@ echo'<tr><td>'.$row['board_type'].'</td>
 
 echo'</table>';
 ?>
-// end table       
+     
