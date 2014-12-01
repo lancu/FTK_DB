@@ -34,7 +34,7 @@ $row = mysqli_fetch_array($r);
 
 $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));   
 
-    print(count($enumList));
+    //print(count($enumList));
     $array = array(
         "foo" => "bar",
         "bar" => "foo");
@@ -252,7 +252,7 @@ mysqli_close($dbc);
 
 
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />    
+  <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>"   
 
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
