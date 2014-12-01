@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> f0ac8b8a226a1a54ba7eb69853a737243c72f8c3
 <?php
   session_start();
 
@@ -214,7 +210,7 @@ echo'</table>';
 
 mysqli_close($dbc);
 ?>
-<<<<<<< HEAD
+
       
 <?php 
 
@@ -226,7 +222,4 @@ if($_SESSION['username']==ADMIN || $_SESSION['username']==ADMIN2){
      }
 ?>      
       
-<!--// end table -->       
-=======
-     
->>>>>>> f0ac8b8a226a1a54ba7eb69853a737243c72f8c3
+
