@@ -7,5 +7,5 @@ define('DB_USER', 'root');
   define('DB_NAME', 'Test');
   define('AD_PASSWORD', 'adminpass');
   define('ADMIN', 'attilio');
-  define('ADMIN2', 'bilbao');
+  define('ADMIN2', 'lucian');
 ?>

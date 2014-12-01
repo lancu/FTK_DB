@@ -34,7 +34,11 @@ $row = mysqli_fetch_array($r);
 
 $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));   
 
+<<<<<<< HEAD
     //print(count($enumList));
+=======
+   // print(count($enumList));
+>>>>>>> f0ac8b8a226a1a54ba7eb69853a737243c72f8c3
     $array = array(
         "foo" => "bar",
         "bar" => "foo");
@@ -250,9 +254,9 @@ mysqli_close($dbc);
  //STARTING FTK MESS
   --> 
 
-
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>"   
+
 
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
@@ -351,7 +355,7 @@ mysqli_close($dbc);
             <label for="Status">Status:</label>
     <input type="Status" size="10" maxlength="20"  name="Status" value="<?php if (!empty($Status)) echo $Status; ?>" /><br />
             <label for="Notes">Notes:</label>
-    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" />Test can I write here ?<br />
+    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" /><br />
             
             
             
