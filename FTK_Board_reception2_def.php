@@ -34,11 +34,7 @@ $row = mysqli_fetch_array($r);
 
 $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));   
 
-<<<<<<< HEAD
-    //print(count($enumList));
-=======
-   // print(count($enumList));
->>>>>>> f0ac8b8a226a1a54ba7eb69853a737243c72f8c3
+
     $array = array(
         "foo" => "bar",
         "bar" => "foo");
