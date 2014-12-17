@@ -4,7 +4,7 @@
 define('DB_USER', 'root');
   //define('DB_PASSWORD', 'trincolo2000');
   define('DB_PASSWORD', 'root');
-  define('DB_NAME', 'Test');
+  define('DB_NAME', 'FTK_Geneva');
   define('AD_PASSWORD', 'adminpass');
   define('ADMIN', 'attilio');
   define('ADMIN2', 'lucian');

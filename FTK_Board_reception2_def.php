@@ -295,19 +295,58 @@ mysqli_close($dbc);
             echo "<option value=\"$value\" <?php if ($board_type==$value) {echo 'selected';}    ?>$value</option>"; ?>
            <option value="<?php if (!empty($board_type)) echo $board_type ; ?>"> <?php echo $board_type?> </option>
         </select> --> 
-      <input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" /> :: [IM, DF, AUX, AMB, LAMB, SSB, SSB_RTM, DF_RTM, FLIC, FLIC_RTM]  <br \>    
+            
+            
+      <!--<input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" /> :: [IM, DF, AUX, AMB, LAMB, SSB, SSB_RTM, DF_RTM, FLIC, FLIC_RTM]  <br \> -->   
              
-     
+     <select name="board_type"  id="board_type">
+
+             <option value="IM"<?php if (!empty($board_type) && $board_type == 'IM') echo 'selected = "selected"'; ?>>IM</option>
+             <option value="DF"<?php if (!empty($board_type) && $board_type == 'DF') echo 'selected = "selected"'; ?>>DF</option>
+             <option value="AUX"<?php if (!empty($board_type) && $board_type == 'AUX') echo 'selected = "selected"'; ?>>AUX</option>
+             <option value="AMB"<?php if (!empty($board_type) && $board_type == 'AMB') echo 'selected = "selected"'; ?>>AMB</option>
+             <option value="LAMB"<?php if (!empty($board_type) && $board_type == 'LAMB') echo 'selected = "selected"'; ?>>LAMB</option>
+             <option value="SSB"<?php if (!empty($board_type) && $board_type == 'SSB') echo 'selected = "selected"'; ?>>SSB</option>
+             <option value="SSB_RTM"<?php if (!empty($board_type) && $board_type == 'SSB_RTM') echo 'selected = "selected"'; ?>>SSB_RTM</option>
+             <option value="DF_RTM"<?php if (!empty($board_type) && $board_type == 'DF_RTM') echo 'selected = "selected"'; ?>>DF_RTM</option>
+             <option value="FLIC"<?php if (!empty($board_type) && $board_type == 'FLIC') echo 'selected = "selected"'; ?>>FLIC</option>
+             <option value="FLIC_RTM"<?php if (!empty($board_type) && $board_type == 'FLIC_RTM') echo 'selected = "selected"'; ?>>FLIC_RTM</option>
+
+
+</select>
+    <br \>
+            
     <label for="board_id">    ID:</label>
     <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>" /><br />
     
     <label for="location">Location:</label>
-    <input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br />
+    <!---<input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br /> -->
             
      
             
+    <select name="location"  id="location">
+
+             <option value="USA15"<?php if (!empty($location) && $location == 'USA15') echo 'selected = "selected"'; ?>>USA15</option>
+             <option value="Lab4"<?php if (!empty($location) && $location == 'Lab4') echo 'selected = "selected"'; ?>>Lab4</option>
+             <option value="Other"<?php if (!empty($location) && $location == 'Other') echo 'selected = "selected"'; ?>>Other</option>
+             
+</select>
+    <br \>        
+            
+            
+            
     <label for="inst_status">Instalation status:</label>
-    <input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />
+    <!--<input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />-->
+    
+    <select name="inst_status"  id="inst_status">
+
+             <option value="Installed"<?php if (!empty($inst_status) && $inst_status == 'Installed') echo 'selected = "selected"'; ?>>Installed</option>
+             <option value="Spare"<?php if (!empty($inst_status) && $inst_status == 'Spare') echo 'selected = "selected"'; ?>>Spare</option>
+            
+             
+</select>
+    <br \>              
+            
             
     <label for="CERN_receival_date">CERN receival date:</label>
     <input type="date" size="10" maxlength="20"  name="CERN_receival_date" value="<?php if (!empty($CERN_receival_date)) echo $CERN_receival_date; ?>" /><br />
