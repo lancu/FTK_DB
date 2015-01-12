@@ -106,9 +106,9 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $board_id=mysqli_real_escape_string($dbc, trim($_POST['board_id']));
     $location=mysqli_real_escape_string($dbc, trim($_POST['location']));
     $inst_status=mysqli_real_escape_string($dbc, trim($_POST['inst_status']));
-    $cern_receival_date = mysqli_real_escape_string($dbc, trim($_POST['cern_receival_date']));
-    $test_date = mysqli_real_escape_string($dbc, trim($_POST['test_date']));
-    $prod_date = mysqli_real_escape_string($dbc, trim($_POST['prod_date']));
+    $CERN_receival_date = mysqli_real_escape_string($dbc, trim($_POST['CERN_receival_date']));
+    $TEST_date = mysqli_real_escape_string($dbc, trim($_POST['TEST_date']));
+    $Prod_date = mysqli_real_escape_string($dbc, trim($_POST['Prod_date']));
     $rack = mysqli_real_escape_string($dbc, trim($_POST['rack']));
     $crate = mysqli_real_escape_string($dbc, trim($_POST['crate']));
     $slot = mysqli_real_escape_string($dbc, trim($_POST['slot']));
@@ -116,10 +116,10 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $last_user = mysqli_real_escape_string($dbc, trim($_POST['last_user']));
     $MB_SN = mysqli_real_escape_string($dbc, trim($_POST['MB_SN']));
     $MB_Pos = mysqli_real_escape_string($dbc, trim($_POST['MB_Pos']));
-    $notes = mysqli_real_escape_string($dbc, trim($_POST['notes']));
+    $Notes = mysqli_real_escape_string($dbc, trim($_POST['Notes']));
     $FPGA = mysqli_real_escape_string($dbc, trim($_POST['FPGA']));
     $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
-     $status = mysqli_real_escape_string($dbc, trim($_POST['status']));
+     $Status = mysqli_real_escape_string($dbc, trim($_POST['Status']));
     
  }
 
@@ -149,8 +149,8 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
 //getting the data into the DB 
      //here I need to add all values
 
- $queryMain = "INSERT INTO ftk_parts (board_type, board_id, location, inst_status, cern_receival_date,test_date,prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,notes,FPGA,firmware_version,status) VALUE 
- ('$board_type ', '$board_id', '$location', '$inst_status', '$cern_receival_date','$test_date','$prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$notes','$FPGA','$firmware_version','$status') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', cern_receival_date='$cern_receival_date',  test_date='$test_date', prod_date='$prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', notes='$notes', FPGA='$FPGA', firmware_version='$firmware_version' , status = '$status' "; 
+ $queryMain = "INSERT INTO ftk_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,Notes,FPGA,firmware_version,Status) VALUE 
+ ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$Notes','$FPGA','$firmware_version','$Status') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', Notes='$Notes', FPGA='$FPGA', firmware_version='$firmware_version' , Status = '$Status' "; 
    
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
@@ -184,9 +184,9 @@ $row_old = mysqli_fetch_array($data_old);
      $board_id  = $row_old['board_id'];
      $location =  $row_old['location'];
       $inst_status =  $row_old['inst_status'];
-      $cern_receival_date =  $row_old['cern_receival_date'];
-      $test_date =  $row_old['test_date'];
-      $prod_date =  $row_old['prod_date'];
+      $CERN_receival_date =  $row_old['CERN_receival_date'];
+      $TEST_date =  $row_old['TEST_date'];
+      $Prod_date =  $row_old['Prod_date'];
       
        $rack = $row_old['rack'];
       $crate = $row_old['crate']; 
@@ -195,10 +195,10 @@ $row_old = mysqli_fetch_array($data_old);
       $last_user = $row_old['last_user'];
       $MB_SN = $row_old['MB_SN'];
       $MB_Pos = $row_old['MB_Pos'];
-      $notes = $row_old['notes'];
+      $Notes = $row_old['Notes'];
       $FPGA = $row_old['FPGA'];
       $firmware_version = $row_old['firmware_version'];
-      $status   = $row_old['status'];
+      $Status   = $row_old['Status'];
       
       
       
@@ -348,14 +348,14 @@ mysqli_close($dbc);
     <br \>              
             
             
-    <label for="cern_receival_date">CERN receival date:</label>
-    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
+    <label for="CERN_receival_date">CERN receival date:</label>
+    <input type="date" size="10" maxlength="20"  name="CERN_receival_date" value="<?php if (!empty($CERN_receival_date)) echo $CERN_receival_date; ?>" /><br />
     
-    <label for="test_date">TEST date:</label>
-    <input type="date" size="10" maxlength="20"  name="test_date" value="<?php if (!empty($test_date)) echo $test_date; ?>" /><br />
+    <label for="TEST_date">TEST date:</label>
+    <input type="date" size="10" maxlength="20"  name="TEST_date" value="<?php if (!empty($TEST_date)) echo $TEST_date; ?>" /><br />
     
-    <label for="prod_date">Production date:</label>
-    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />
+    <label for="Prod_date">Production date:</label>
+    <input type="date" size="10" maxlength="20"  name="Prod_date" value="<?php if (!empty($Prod_date)) echo $Prod_date; ?>" /><br />
             
        </fieldset>
         
@@ -387,17 +387,10 @@ mysqli_close($dbc);
             
             <label for="firmware_version">Firmware Version:</label>
     <input type="varchar" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
-            
-             
-              <label for="status">Status:</label>
-                <select name="status"  id="status">
-                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
-             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
-             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
-            </select><br />
-            
-            <label for="notes">Notes:</label>
-    <input type="text" size="150" maxlength="150"  name="notes" value="<?php if (!empty($notes)) echo $notes; ?>" /><br />
+            <label for="Status">Status:</label>
+    <input type="Status" size="10" maxlength="20"  name="Status" value="<?php if (!empty($Status)) echo $Status; ?>" /><br />
+            <label for="Notes">Notes:</label>
+    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" /><br />
             
             
             

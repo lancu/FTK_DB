@@ -1,48 +1,4 @@
-<?php function a(){
 
-$table_name = "FTK_parts";
-$column_name = "board_type";
-
-echo "<select name=\"$column_name\"><option>Select one</option>";
-$q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'";
-$r = mysqli_query($dbc, $q);
-
-$row = mysqli_fetch_array($r);
-
-$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
-
-foreach($enumList as $value)
-    echo "<option value=\"$value\">$value</option>";
-echo "<option value=\" $board_type\"> $board_type</option>";
-
-echo "</select>";
-}
-
-?>
-
-<?php function get_board_types ($dbc){
-    $table_name = "FTK_parts";
-$column_name = "board_type";
-
-$q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'";
-$r = mysqli_query($dbc, $q);
-    
-
-$row = mysqli_fetch_array($r);
-
-$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));   
-
-    print(count($enumList));
-    $array = array(
-        "foo" => "bar",
-        "bar" => "foo");
-   // return $array;   
-    return $enumList;
-    
-    
-} ?>
 
 
 <?php
@@ -71,7 +27,7 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-  <h3>FTK Reception Test - Board Data Insertion</h3>
+  <h3>FTK Reception Test - General Devices Data Insertion</h3>
 
 <?php
 					       //ini_set('display_errors', 'On');
@@ -101,31 +57,34 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     
      
      //ftk added 
-    $board_type = mysqli_real_escape_string($dbc, trim($_POST['board_type']));
+    $com_type = mysqli_real_escape_string($dbc, trim($_POST['com_type']));
     
-    $board_id=mysqli_real_escape_string($dbc, trim($_POST['board_id']));
+    $com_id=mysqli_real_escape_string($dbc, trim($_POST['com_id']));
     $location=mysqli_real_escape_string($dbc, trim($_POST['location']));
     $inst_status=mysqli_real_escape_string($dbc, trim($_POST['inst_status']));
-    $CERN_receival_date = mysqli_real_escape_string($dbc, trim($_POST['CERN_receival_date']));
-    $TEST_date = mysqli_real_escape_string($dbc, trim($_POST['TEST_date']));
-    $Prod_date = mysqli_real_escape_string($dbc, trim($_POST['Prod_date']));
+    $cern_receival_date = mysqli_real_escape_string($dbc, trim($_POST['cern_receival_date']));
+   
+    $prod_date = mysqli_real_escape_string($dbc, trim($_POST['prod_date']));
     $rack = mysqli_real_escape_string($dbc, trim($_POST['rack']));
     $crate = mysqli_real_escape_string($dbc, trim($_POST['crate']));
     $slot = mysqli_real_escape_string($dbc, trim($_POST['slot']));
     $owner = mysqli_real_escape_string($dbc, trim($_POST['owner']));
     $last_user = mysqli_real_escape_string($dbc, trim($_POST['last_user']));
-    $MB_SN = mysqli_real_escape_string($dbc, trim($_POST['MB_SN']));
-    $MB_Pos = mysqli_real_escape_string($dbc, trim($_POST['MB_Pos']));
-    $Notes = mysqli_real_escape_string($dbc, trim($_POST['Notes']));
-    $FPGA = mysqli_real_escape_string($dbc, trim($_POST['FPGA']));
-    $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
-     
-     
-     
+
+    $notes = mysqli_real_escape_string($dbc, trim($_POST['notes']));
+   
+   
+     $status = mysqli_real_escape_string($dbc, trim($_POST['status']));
+     $type_device = mysqli_real_escape_string($dbc, trim($_POST['type_device']));
+    
+ }
 
  
       if ($error) {
-        echo $error ;}
+        echo $error ;
+      }
+     
+    
     //Grab the user data from the DB	
     
     $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
@@ -141,14 +100,14 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
 
    
 
-   
+ 
 
 //getting the data into the DB 
      //here I need to add all values
 
- $queryMain = "INSERT INTO FTK_parts (board_type, board_id, location, inst_status, CERN_receival_date,TEST_date,Prod_date,rack,crate,slot,owner,last_user,MB_SN,MB_Pos,Notes,FPGA,firmware_version) VALUE 
- ('$board_type ', '$board_id', '$location', '$inst_status', '$CERN_receival_date','$TEST_date','$Prod_date','$rack','$crate','$slot','$owner','$email_user','$MB_SN','$MB_Pos','$Notes','$FPGA','$firmware_version') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', CERN_receival_date='$CERN_receival_date',  TEST_date='$TEST_date', Prod_date='$Prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user', MB_SN='$MB_SN', MB_Pos='$MB_Pos', Notes='$Notes', FPGA='$FPGA', firmware_version='$firmware_version'  "; 
-   
+ $queryMain = "INSERT INTO ftk_other (com_type, com_id, location, inst_status, cern_receival_date,prod_date,rack,crate,slot,owner,last_user,notes,status,type_device) VALUE 
+ ('$com_type ', '$com_id', '$location', '$inst_status', '$cern_receival_date','$prod_date','$rack','$crate','$slot','$owner','$email_user','$notes','$status', '$type_device') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', cern_receival_date='$cern_receival_date',   prod_date='$prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user',  notes='$notes',   status = '$status', type_device='$type_device' "; 
+
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
     die('Invalid query: ' . mysqli_error($dbc));
@@ -157,8 +116,8 @@ if (!$result) {
     echo '<p> More detailed:' . mysqli_error($dbc)  '</p>';*/
  }
  
- }
-     
+ 
+
     
 //Grab data from the DB 
 //here I grab the data in order to print it on the screen. I need another area for filling the data back into the DB. 
@@ -167,34 +126,34 @@ if(!empty($_GET['id'])){
     
     //notempty L544 for GetID 
 //id='5'; //comment this out
-$query_old = "SELECT * FROM FTK_parts WHERE id= '" . $_GET['id'] . "'";
+$query_old = "SELECT * FROM ftk_other WHERE id= '" . $_GET['id'] . "'";
     //$query_old = "SELECT * FROM Module_Reception_Test_Geneva WHERE ATLAS_id = '" . $_GET['ATLAS_id'] . "' AND id= '" . $_GET['id'] . "'";
-//$query_old = "SELECT * FROM FTK_parts WHERE id=  18";
+//$query_old = "SELECT * FROM ftk_other WHERE id=  18";
 $data_old = mysqli_query($dbc, $query_old);
 $row_old = mysqli_fetch_array($data_old);
 
 
-echo $row_old;
+//echo $row_old;
 
   if ($row_old != NULL) {
-	 $board_type = $row_old['board_type'];
-     $board_id  = $row_old['board_id'];
+	 $com_type = $row_old['com_type'];
+     $com_id  = $row_old['com_id'];
      $location =  $row_old['location'];
       $inst_status =  $row_old['inst_status'];
-      $CERN_receival_date =  $row_old['CERN_receival_date'];
-      $TEST_date =  $row_old['TEST_date'];
-      $Prod_date =  $row_old['Prod_date'];
+      $cern_receival_date =  $row_old['cern_receival_date'];
+     
+      $prod_date =  $row_old['prod_date'];
       
        $rack = $row_old['rack'];
       $crate = $row_old['crate']; 
       $slot = $row_old['slot'];
        $owner = $row_old['owner'];
       $last_user = $row_old['last_user'];
-      $MB_SN = $row_old['MB_SN'];
-      $MB_Pos = $row_old['MB_Pos'];
-      $Notes = $row_old['Notes'];
-      $FPGA = $row_old['FPGA'];
-      $firmware_version = $row_old['firmware_version'];
+      $notes = $row_old['notes'];
+    
+     
+      $status   = $row_old['status'];
+      $type_device   = $row_old['type_device'];
       
       
       
@@ -209,8 +168,8 @@ echo $row_old;
 
 //getting the boards names 
 
-/*$table_name = "FTK_parts";
-$column_name = "board_type";
+/*$table_name = "ftk_other";
+$column_name = "com_type";
 
 //echo "<select name=\"$column_name\"><option>Select one</option>";
 $q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
@@ -220,10 +179,10 @@ $r = mysqli_query($dbc, $q);
 $row = mysqli_fetch_array($r);
 
 $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
-$enumList2 = get_board_types();*/
+$enumList2 = get_com_types();*/
 //foreach($enumList as $value)
 //    echo "<option value=\"$value\">$value</option>";
-//echo "<option value=\" $board_type\"> $board_type</option>";
+//echo "<option value=\" $com_type\"> $com_type</option>";
 
 //echo "</select>";
 //delete this selection example box. 
@@ -234,7 +193,9 @@ $enumList2 = get_board_types();*/
 
 //Print Table 
 
-$enumList2=get_board_types($dbc);
+
+
+//$enumList2=get_com_types($dbc);
 
 mysqli_close($dbc);
 ?>
@@ -244,10 +205,9 @@ mysqli_close($dbc);
  //STARTING FTK MESS
   --> 
 
-
 <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
-    
+  <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>"   
+
 
     <fieldset><legend>FTK entry Information </legend>
       <fieldset><legend>Information on the user</legend>
@@ -280,38 +240,94 @@ mysqli_close($dbc);
      
 
         <fieldset><legend><b> FTK Stuff</b> </legend>
-    <label for="board_type">Board type:</label>
-    <!--<input type="enum" size="10" maxlength="20"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type; ?>" /><br />-->
+            
+     <label for="type_device">Device type:</label>
+                <select name="type_device"  id="type_device">
+                <option value="Crate"<?php if (!empty($type_device) && $type_device == 'Crate') echo 'selected = "selected"'; ?>>Crate</option>
+             <option value="PS"<?php if (!empty($type_device) && $type_device == 'PS') echo 'selected = "selected"'; ?>>PS</option>
+             <option value="PC"<?php if (!empty($type_device) && $type_device == 'PC') echo 'selected = "selected"'; ?>>PC</option> 
+            <option value="SBC"<?php if (!empty($type_device) && $type_device == 'SBC') echo 'selected = "selected"'; ?>>SBC</option>
+             <option value="Switch"<?php if (!empty($type_device) && $type_device == 'Switch') echo 'selected = "selected"'; ?>>Switch</option> 
+             <option value="Other"<?php if (!empty($type_device) && $type_device == 'Other') echo 'selected = "selected"'; ?>>Other</option>
+                    
+                    
+            </select><br />
+            
+    <label for="com_type">Device:</label>
+    <!--<input type="enum" size="10" maxlength="20"  name="com_type" value="<?php if (!empty($com_type)) echo $com_type; ?>" /><br />-->
          
       
             
   <!--     <select name="selType">
         <?php   foreach( $enumList2 as $value)
-            echo "<option value=\"$value\" <?php if ($board_type==$value) {echo 'selected';}    ?>$value</option>"; ?>
-           <option value="<?php if (!empty($board_type)) echo $board_type ; ?>"> <?php echo $board_type?> </option>
+            echo "<option value=\"$value\" <?php if ($com_type==$value) {echo 'selected';}    ?>$value</option>"; ?>
+           <option value="<?php if (!empty($com_type)) echo $com_type ; ?>"> <?php echo $com_type?> </option>
         </select> --> 
-      <input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" /> :: [IM, DF, AUX, AMB, LAMB, SSB, SSB_RTM, DF_RTM, FLIC, FLIC_RTM]  <br \>    
+            
+            
+      <!--<input type="option"  name="com_type" value="<?php if (!empty($com_type)) echo $com_type ; ?>" /> :: [IM, DF, AUX, AMB, LAMB, SSB, SSB_RTM, DF_RTM, FLIC, FLIC_RTM]  <br \> -->   
+            
+            
+            
              
-     
-    <label for="board_id">    ID:</label>
-    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>" /><br />
+     <select name="com_type"  id="com_type">
+
+             <option value="VP717"<?php if (!empty($com_type) && $com_type == 'VP717') echo 'selected = "selected"'; ?>>VP717</option>
+             <option value="ATCA-F125"<?php if (!empty($com_type) && $com_type == 'ATCA-F125') echo 'selected = "selected"'; ?>>ATCA-F125</option>
+             <option value="ATCA-SM"<?php if (!empty($com_type) && $com_type == 'ATCA-SM') echo 'selected = "selected"'; ?>>ATCA-SM</option>
+             <option value="IPMC"<?php if (!empty($com_type) && $com_type == 'IPMC') echo 'selected = "selected"'; ?>>IPMC</option>
+             <option value="Xilinx-progr"<?php if (!empty($com_type) && $com_type == 'Xilinx-progr') echo 'selected = "selected"'; ?>>Xilinx-progr</option>
+             <option value="Altera-progr"<?php if (!empty($com_type) && $com_type == 'Altera-progr') echo 'selected = "selected"'; ?>>Altera-progr</option>
+             <option value="SFP+"<?php if (!empty($com_type) && $com_type == 'SFP+') echo 'selected = "selected"'; ?>>SFP+</option>
+             <option value="QSFP"<?php if (!empty($com_type) && $com_type == 'QSFP') echo 'selected = "selected"'; ?>>QSFP</option>
+             <option value="SFP"<?php if (!empty($com_type) && $com_type == 'SFP') echo 'selected = "selected"'; ?>>SFP</option>
+             <option value="SFP-RJ45"<?php if (!empty($com_type) && $com_type == 'SFP-RJ45') echo 'selected = "selected"'; ?>>SFP-RJ45</option>
+          <option value="PC"<?php if (!empty($com_type) && $com_type == 'PC') echo 'selected = "selected"'; ?>>PC</option>
+         <option value="NIC10GBS"<?php if (!empty($com_type) && $com_type == 'NIC10GBS') echo 'selected = "selected"'; ?>>NIC10GBS</option>
+         
+
+
+</select>
+    <br \>
+            
+    <label for="com_id">    ID:</label>
+    <input type="int" maxlenght="4" size="4"  name="com_id" value="<?php if (!empty($com_id)) echo $com_id; ?>" /><br />
     
     <label for="location">Location:</label>
-    <input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br />
+    <!---<input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br /> -->
             
      
             
-    <label for="inst_status">Instalation status:</label>
-    <input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />
+    <select name="location"  id="location">
+
+             <option value="USA15"<?php if (!empty($location) && $location == 'USA15') echo 'selected = "selected"'; ?>>USA15</option>
+             <option value="Lab4"<?php if (!empty($location) && $location == 'Lab4') echo 'selected = "selected"'; ?>>Lab4</option>
+             <option value="Other"<?php if (!empty($location) && $location == 'Other') echo 'selected = "selected"'; ?>>Other</option>
+             
+</select>
+    <br />        
             
-    <label for="CERN_receival_date">CERN receival date:</label>
-    <input type="date" size="10" maxlength="20"  name="CERN_receival_date" value="<?php if (!empty($CERN_receival_date)) echo $CERN_receival_date; ?>" /><br />
+            
+            
+    <label for="inst_status">Instalation status:</label>
+    <!--<input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />-->
     
-    <label for="TEST_date">TEST date:</label>
-    <input type="date" size="10" maxlength="20"  name="TEST_date" value="<?php if (!empty($TEST_date)) echo $TEST_date; ?>" /><br />
+    <select name="inst_status"  id="inst_status">
+
+             <option value="Installed"<?php if (!empty($inst_status) && $inst_status == 'Installed') echo 'selected = "selected"'; ?>>Installed</option>
+             <option value="Spare"<?php if (!empty($inst_status) && $inst_status == 'Spare') echo 'selected = "selected"'; ?>>Spare</option>
+            
+             
+</select>
+    <br />              
+            
+            
+    <label for="cern_receival_date">CERN receival date:</label>
+    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
     
-    <label for="Prod_date">Production date:</label>
-    <input type="date" size="10" maxlength="20"  name="Prod_date" value="<?php if (!empty($Prod_date)) echo $Prod_date; ?>" /><br />
+   
+    <label for="prod_date">Production date:</label>
+    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />
             
        </fieldset>
         
@@ -332,24 +348,24 @@ mysqli_close($dbc);
             <label for="last_user">Last change:</label>
     <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
             
-            <label for="MB_SN">MB_SN:</label>
-    <input type="varchar" size="10" maxlength="20"  name="MB_SN" value="<?php if (!empty($MB_SN)) echo $MB_SN; ?>" /><br />
+           
             
-             <label for="MB_Pos">MB_Pos:</label>
-    <input type="smallint" size="1" maxlength="20"  name="MB_Pos" value="<?php if (!empty($MB_Pos)) echo $MB_Pos; ?>" /><br />
+       
+          
             
-            <label for="FPGA">FPGA:</label>
-    <input type="varchar" size="20" maxlength="20"  name="FPGA" value="<?php if (!empty($FPGA)) echo $FPGA; ?>" /><br />
+              <label for="status">Status:</label>
+                <select name="status"  id="status">
+                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
+             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
+             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
+            </select><br />
             
-            <label for="firmware_version">Firmware Version:</label>
-    <input type="firmware_version" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
-            <label for="Notes">Notes:</label>
-    <input type="text" size="150" maxlength="150"  name="Notes" value="<?php if (!empty($Notes)) echo $Notes; ?>" />Test can I write here ?<br />
-            
-            
-            
+            <label for="notes">notes:</label>
+    <input type="text" size="150" maxlength="150"  name="notes" value="<?php if (!empty($notes)) echo $notes; ?>" /><br />
             
             
+            
+           
             
             
             

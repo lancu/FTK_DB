@@ -27,7 +27,7 @@
 <!--<body onload="onload()"><h1><img src="ATLAS_NoText_t.png" height="75px"> FTK Production Database Interface</h1><p>This web user interface allows you to interact with the <b>MySQL production database</b> in a pratical and easy way.
 </p>-->
 
-<body><h1><img src="ATLAS_NoText_t.png" height="75px"> FTK Production Database Interface</h1><p>This web user interface allows you to interact with the <b>MySQL production database</b> in a pratical and easy way.
+<body><h1><img src="ftk_logo.png" height="75px"> FTK Production Database Interface</h1><p>This web user interface allows you to interact with the <b>MySQL production database</b> in a pratical and easy way.
 </p>
 
 <div style="border-width: 2px; border-style:solid"><h4 align="center">Short Introduction</h4>
@@ -57,11 +57,16 @@
     </li> 
     <li class="high">Services 
         <!-- Commented out to release first web version -->
-   <li class="low"><a href="table1.php">Table of all modules</a></li>
+   <li class="low"><a href="table1.php">Table of all boards</a></li>
+     <li class="low"><a href="table_cables.php">Table of all cables</a></li>
+     <li class="low"><a href="table_other.php">Table of all general components</a></li>
+    
     <!--<li class="low"><a href="editprofile.php">Insert Module Data</a></li>-->
-    <li class="low"><a href="FTK_viewTable2.php">FTK view Table</a></li>
+    <!--<li class="low"><a href="FTK_viewTable2.php">FTK view Table</a></li>-->
     <!--<li class="low"><a href="FTK_viewTable.php">FTK view Table</a></li>-->
-    <li class="low"><a href="FTK_Board_reception2_def.php">FTK reception</a></li></li>
+    <li class="low"><a href="FTK_Board_reception2_def.php">FTK board reception</a></li></li>
+    <li class="low"><a href="FTK_cable_reception2_def.php">FTK cables  reception</a></li></li>
+    <li class="low"><a href="FTK_other_reception2_def.php">FTK general reception</a></li></li>
     <li class="low"><a href="FTK_Query_section.php">Query data section</a></li>
     
     <!-- Commented out to release first web version -->

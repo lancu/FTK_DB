@@ -37,13 +37,15 @@
 
 //<?php
 
+echo "DATA CONTENT TO BE FINISHED";
+
 
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
     or die(mysql_error());
 //mysql_connect('localhost','root','root') 
 //    or die(mysql_error());
 mysql_select_db(DB_NAME) or die(mysql_error());
-$field='board_type';
+$field='cable_type';
 $sort='ASC';
 if(isset($_GET['sorting']))
 {
@@ -56,13 +58,13 @@ if(isset($_GET['sorting']))
     $sort='ASC';
   }
 }
-if($_GET['field']=='board_type')
+if($_GET['field']=='cable_type')
 {
-   $field = "board_type"; 
+   $field = "cable_type"; 
 }
-elseif($_GET['field']=='board_id')
+elseif($_GET['field']=='cable_id')
 {
-   $field = "board_id";
+   $field = "cable_id";
 }
 elseif($_GET['field']=='location')
 {
@@ -84,13 +86,13 @@ elseif($_GET['field']=='inst_status')
 {
    $field="inst_status";
 }
-elseif($_GET['field']=='cern_receival_date')
+elseif($_GET['field']=='CERN_receival_date')
 {
-   $field="cern_receival_date";
+   $field="CERN_receival_date";
 }
-elseif($_GET['field']=='prod_date')
+elseif($_GET['field']=='Prod_date')
 {
-   $field="prod_date";
+   $field="Prod_date";
 }
 elseif($_GET['field']=='owner')
 {
@@ -126,14 +128,14 @@ elseif($_GET['field']=='id')
 }
 
 
-//$sql = "SELECT board_type, board_id, inst_status FROM FTK_parts ORDER BY $field $sort";
-$sql = "SELECT * FROM ftk_parts ORDER BY $field $sort";
-//$sql = "SELECT board_type, board_id, inst_status FROM FTK_parts ORDER BY id $sort";
+//$sql = "SELECT cable_type, cable_id, inst_status FROM FTK_parts ORDER BY $field $sort";
+$sql = "SELECT * FROM ftk_cables ORDER BY $field $sort";
+//$sql = "SELECT cable_type, cable_id, inst_status FROM FTK_parts ORDER BY id $sort";
 $result = mysql_query($sql) or die(mysql_error());
 
  if (isset($_POST['submit'])) {
     foreach ($_POST['todelete'] as $delete_id) {
-      $query = "DELETE FROM ftk_parts WHERE id = $delete_id";
+      $query = "DELETE FROM ftk_cables WHERE id = $delete_id";
       //echo $query;
       //echo '<br />';
       
@@ -150,32 +152,32 @@ if($_SESSION['username']==ADMIN || $_SESSION['username']==ADMIN2)
   { 
     //echo 'strange mode';
     //echo '<tr><td> Remove</td>';
-        echo'<th>Remove</th><th><a href="table1.php?sorting='.$sort.'&field=board_type">Board Type</a></th>';
+        echo'<th>Remove</th><th><a href="table_cables.php?sorting='.$sort.'&field=cable_type">Board Type</a></th>';
     }
 else 
     {   
-    echo'<th><a href="table1.php?sorting='.$sort.'&field=board_type">Board Type</a></th>';
+    echo'<th><a href="table_cables.php?sorting='.$sort.'&field=cable_type">Board Type</a></th>';
 
     }
-echo'<th><a href="table1.php?sorting='.$sort.'&field=id">ID</a></th>
-    <th><a href="table1.php?sorting='.$sort.'&field=board_id">Board ID</a></th>
-     <th><a href="table1.php?sorting='.$sort.'&field=location">location</a></th>
-     <th><a href="table1.php?sorting='.$sort.'&field=rack">rack</a></th>
-     <th><a href="table1.php?sorting='.$sort.'&field=crate">crate</a></th>
-     <th><a href="table1.php?sorting='.$sort.'&field=slot">slot</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=inst_status">Inst Status</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=cern_receival_date">cern_receival_date</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=test_date">test_date</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=prod_date">prod_date</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=owner">owner</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=last_user">last_user</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=MB_SN">MB_SN</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=MB_Pos">MB_Pos</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=FPGA">FPGA</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=firmware_version">firmware_version</a></th>
-<th><a href="table1.php?sorting='.$sort.'&field=Status">Status</a></th>
+echo'<th><a href="table_cables.php?sorting='.$sort.'&field=id">ID</a></th>
+    <th><a href="table_cables.php?sorting='.$sort.'&field=cable_id">Board ID</a></th>
+     <th><a href="table_cables.php?sorting='.$sort.'&field=location">location</a></th>
+     <th><a href="table_cables.php?sorting='.$sort.'&field=rack">rack</a></th>
+     <th><a href="table_cables.php?sorting='.$sort.'&field=crate">crate</a></th>
+     <th><a href="table_cables.php?sorting='.$sort.'&field=slot">slot</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=inst_status">Inst Status</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=CERN_receival_date">CERN_receival_date</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=TEST_date">TEST_date</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=Prod_date">Prod_date</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=owner">owner</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=last_user">last_user</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=MB_SN">MB_SN</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=MB_Pos">MB_Pos</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=FPGA">FPGA</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=firmware_version">firmware_version</a></th>
+<th><a href="table_cables.php?sorting='.$sort.'&field=Status">Status</a></th>
 
-<th><a href="table1.php?sorting='.$sort.'&field=board_type_ID">Notes</a></th>';
+<th><a href="table_cables.php?sorting='.$sort.'&field=cable_type_ID">Board type ID</a></th>';
  
 while($row = mysql_fetch_array($result))
 {
@@ -195,16 +197,16 @@ while($row = mysql_fetch_array($result))
         }
 
 
-    echo'<td>'.$row['board_type'].'</td>
-        <td>'.$row['board_id'].'</td>
+    echo'<td>'.$row['cable_type'].'</td>
+        <td>'.$row['cable_id'].'</td>
         <td>'.$row['location'].'</td>
         <td>'.$row['rack'].'</td>
          <td>'.$row['crate'].'</td>
           <td>'.$row['slot'].'</td>
           <td>'.$row['inst_status'].'</td>
-          <td>'.$row['cern_receival_date'].'</td>
-          <td>'.$row['test_date'].'</td>
-          <td>'.$row['prod_date'].'</td>
+          <td>'.$row['CERN_receival_date'].'</td>
+          <td>'.$row['TEST_date'].'</td>
+          <td>'.$row['Prod_date'].'</td>
           
         <td>'.$row['owner'].'</td>
         <td>'.$row['last_user'].'</td>
@@ -212,8 +214,8 @@ while($row = mysql_fetch_array($result))
         <td>'.$row['MB_Pos'].'</td>
         <td>'.$row['FPGA'].'</td>
         <td>'.$row['firmware_version'].'</td>
-        <td>'.$row['status'].'</td>
-        <td>'.$row['notes'].'</td>
+        <td>'.$row['Status'].'</td>
+        <td>'.$row['cable_type_ID'].'</td>
     
     </tr>';
 }
