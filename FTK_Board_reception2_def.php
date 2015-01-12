@@ -121,7 +121,7 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     $firmware_version = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
      $status = mysqli_real_escape_string($dbc, trim($_POST['status']));
     
- }
+ 
 
  
       if ($error) {
@@ -160,7 +160,7 @@ if (!$result) {
     echo '<p> More detailed:' . mysqli_error($dbc)  '</p>';*/
  }
  
- 
+  } // end of if_POST
 
     
 //Grab data from the DB 

@@ -2,11 +2,11 @@
 
 
 <?php
-  //ini_set('display_errors', 'On');  
- session_start();
+//ini_set('display_errors', 'On');
+session_start();
 
   // If the session vars aren't set, try to set them with a cookie
-  if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     if (isset($_COOKIE['user_id']) && isset($_COOKIE['username'])) {
       $_SESSION['user_id'] = $_COOKIE['user_id'];
       $_SESSION['username'] = $_COOKIE['username'];
@@ -30,7 +30,7 @@
   <h3>FTK Reception Test - General Devices Data Insertion</h3>
 
 <?php
-					       //ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
   require_once('appvars.php');
   require_once('connectvars.php');
 
@@ -38,7 +38,7 @@
   if (!isset($_SESSION['user_id'])) {
     echo '<p class="login">Please <a href="login.php">log in</a> to access this page.</p>';
     exit();
-  }
+  } 
   else {
     echo('<p class="login">You are logged in as ' . $_SESSION['username'] . '. <a href="logout.php">Log out</a>.<br /> Go back to the <a href="index.php">Index</a>.</p>');
   }
@@ -46,9 +46,9 @@
   // Connect to the database
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-   
 
- if (isset($_POST['submit'])) {
+if (isset($_POST['submit_other'])) {
+     echo Lucian;
     // Grab the profile data from the POST
     $first_name = mysqli_real_escape_string($dbc, trim($_POST['name_user']));
     $surname_user = mysqli_real_escape_string($dbc, trim($_POST['surname_user']));
@@ -77,7 +77,7 @@
      $status = mysqli_real_escape_string($dbc, trim($_POST['status']));
      $type_device = mysqli_real_escape_string($dbc, trim($_POST['type_device']));
     
- }
+ 
 
  
       if ($error) {
@@ -116,7 +116,7 @@ if (!$result) {
     echo '<p> More detailed:' . mysqli_error($dbc)  '</p>';*/
  }
  
- 
+ } // end of if_POST
 
     
 //Grab data from the DB 
@@ -164,38 +164,7 @@ $row_old = mysqli_fetch_array($data_old);
 }
 
 
-//delete this selection example box     
 
-//getting the boards names 
-
-/*$table_name = "ftk_other";
-$column_name = "com_type";
-
-//echo "<select name=\"$column_name\"><option>Select one</option>";
-$q = "SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = '$table_name' AND COLUMN_NAME = '$column_name'";
-$r = mysqli_query($dbc, $q);
-
-$row = mysqli_fetch_array($r);
-
-$enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (strlen($row['COLUMN_TYPE'])-6))));
-$enumList2 = get_com_types();*/
-//foreach($enumList as $value)
-//    echo "<option value=\"$value\">$value</option>";
-//echo "<option value=\" $com_type\"> $com_type</option>";
-
-//echo "</select>";
-//delete this selection example box. 
-
-//echo $enumList;
-
-
-
-//Print Table 
-
-
-
-//$enumList2=get_com_types($dbc);
 
 mysqli_close($dbc);
 ?>
@@ -222,20 +191,7 @@ mysqli_close($dbc);
       <?php if (!empty($email_user)) echo $email_user; ?>
       <input type="hidden" id="email_user" name="email_user" value="<?php if (!empty($email_user)) echo $email_user; ?>" /><br />
           </fieldset>
-        
-       <!-- <fieldset><legend> Board Information</legend>
-      <label for="Module_ID">Module ID:</label>
-      <input type="text" name="id_module_A" maxlenght="2" size="2" value="<?php if (!empty($id_module_A)) echo $id_module_A; ?>"/> - <input type="text" name="id_module_B" maxlenght="2" size="2" value="<?php if (!empty($id_module_B)) echo $id_module_B; ?>" /> - <input type="text" name="id_module_C"   size="2" maxlenght="2" value="<?php if (!empty($id_module_C)) echo $id_module_C; ?>" />
-      <br />
-      <label for="module_type">Module Technology:</label>
-      <input type="radio" name="module_type" value="Planar" <?php if (!empty($module_type) && $module_type == 'Planar') echo 'checked="checked"'; ?> /> Planar 
-      <input type="radio" name="module_type" value="3D" <?php if (!empty($module_type) && $module_type == '3D') echo 'checked="checked"'; ?>/> 3D <br />
-      <label for="b_a_TH">Thermal Test:</label>
-      <input type="radio" name="b_a_TH" value="2" <?php if (!empty($b_a_TH) && $b_a_TH == '2') echo 'checked="checked"'; ?>/> Yes 
-      <input type="radio" name="b_a_TH" value="1" <?php if (!empty($b_a_TH) && $b_a_TH == '1') echo 'checked="checked"'; ?>/> No
-      <br />
-
-      </fieldset> -->
+    
         
      
 
@@ -288,7 +244,7 @@ mysqli_close($dbc);
 
 
 </select>
-    <br \>
+    <br />
             
     <label for="com_id">    ID:</label>
     <input type="int" maxlenght="4" size="4"  name="com_id" value="<?php if (!empty($com_id)) echo $com_id; ?>" /><br />
@@ -360,7 +316,7 @@ mysqli_close($dbc);
              <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
             </select><br />
             
-            <label for="notes">notes:</label>
+            <label for="notes">Notes:</label>
     <input type="text" size="150" maxlength="150"  name="notes" value="<?php if (!empty($notes)) echo $notes; ?>" /><br />
             
             
@@ -376,7 +332,7 @@ mysqli_close($dbc);
     </fieldset>
     </fieldset>
     
-    <input type="submit" value="Save Module" name="submit" />
+    <input type="submit" value="Save Module" name="submit_other" />
   </form>
 </body> 
 </html>
