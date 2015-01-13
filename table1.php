@@ -150,14 +150,14 @@ if($_SESSION['username']==ADMIN || $_SESSION['username']==ADMIN2)
   { 
     //echo 'strange mode';
     //echo '<tr><td> Remove</td>';
-        echo'<th>Remove</th><th><a href="table1.php?sorting='.$sort.'&field=board_type">Board Type</a></th>';
+        echo'<th>Remove</th><th><a href="table1.php?sorting='.$sort.'&field=id">ID</a></th>';
     }
 else 
     {   
-    echo'<th><a href="table1.php?sorting='.$sort.'&field=board_type">Board Type</a></th>';
+    echo'<th><a href="table1.php?sorting='.$sort.'&field=id">ID</a></th>';
 
     }
-echo'<th><a href="table1.php?sorting='.$sort.'&field=id">ID</a></th>
+echo'<th><a href="table1.php?sorting='.$sort.'&field=board_type">Board Type</a></th>
     <th><a href="table1.php?sorting='.$sort.'&field=board_id">Board ID</a></th>
      <th><a href="table1.php?sorting='.$sort.'&field=location">location</a></th>
      <th><a href="table1.php?sorting='.$sort.'&field=rack">rack</a></th>

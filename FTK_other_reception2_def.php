@@ -46,9 +46,22 @@ if (!isset($_SESSION['user_id'])) {
   // Connect to the database
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
+//Getting user 
+  
+    $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    $data = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_array($data);
+
+    if ($row != NULL) {
+      $name_user = $row['first_name'];
+      $surname_user = $row['last_name'];
+      $email_user = $row['email'];
+     }
+//user getting done 
+
 
 if (isset($_POST['submit_other'])) {
-     echo Lucian;
+     
     // Grab the profile data from the POST
     $first_name = mysqli_real_escape_string($dbc, trim($_POST['name_user']));
     $surname_user = mysqli_real_escape_string($dbc, trim($_POST['surname_user']));
@@ -76,6 +89,8 @@ if (isset($_POST['submit_other'])) {
    
      $status = mysqli_real_escape_string($dbc, trim($_POST['status']));
      $type_device = mysqli_real_escape_string($dbc, trim($_POST['type_device']));
+    $firmware_version  = mysqli_real_escape_string($dbc, trim($_POST['firmware_version']));
+    $serial_number = mysqli_real_escape_string($dbc, trim($_POST['serial_number']));
     
  
 
@@ -85,28 +100,11 @@ if (isset($_POST['submit_other'])) {
       }
      
     
-    //Grab the user data from the DB	
     
-    $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
-    $data = mysqli_query($dbc, $query);
-    $row = mysqli_fetch_array($data);
-
-    if ($row != NULL) {
-      $name_user = $row['first_name'];
-      $surname_user = $row['last_name'];
-      $email_user = $row['email'];
-     }
-
-
-   
-
- 
-
-//getting the data into the DB 
      //here I need to add all values
 
- $queryMain = "INSERT INTO ftk_other (com_type, com_id, location, inst_status, cern_receival_date,prod_date,rack,crate,slot,owner,last_user,notes,status,type_device) VALUE 
- ('$com_type ', '$com_id', '$location', '$inst_status', '$cern_receival_date','$prod_date','$rack','$crate','$slot','$owner','$email_user','$notes','$status', '$type_device') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', cern_receival_date='$cern_receival_date',   prod_date='$prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user',  notes='$notes',   status = '$status', type_device='$type_device' "; 
+ $queryMain = "INSERT INTO ftk_other (com_type, com_id, location, inst_status, cern_receival_date,prod_date,rack,crate,slot,owner,last_user,notes,status,type_device, firmware_version, serial_number) VALUE 
+ ('$com_type ', '$com_id', '$location', '$inst_status', '$cern_receival_date','$prod_date','$rack','$crate','$slot','$owner','$email_user','$notes','$status', '$type_device', '$firmware_version','$serial_number') ON DUPLICATE KEY UPDATE location='$location', inst_status='$inst_status', cern_receival_date='$cern_receival_date',   prod_date='$prod_date', rack='$rack', crate='$crate', slot='$slot', owner='$owner', last_user='$email_user',  notes='$notes',   status = '$status', type_device='$type_device', firmware_version='$firmware_version', serial_number='$serial_number' "; 
 
 $result = mysqli_query($dbc, $queryMain) ;//or trigger_error("Query Failed! SQL: $queryMain - Error: " . mysqli_error($dbc));
 if (!$result) {
@@ -154,6 +152,8 @@ $row_old = mysqli_fetch_array($data_old);
      
       $status   = $row_old['status'];
       $type_device   = $row_old['type_device'];
+      $firmware_version   = $row_old['firmware_version'];
+      $serial_number   = $row_old['serial_number'];
       
       
       
@@ -178,8 +178,8 @@ mysqli_close($dbc);
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>"   
 
 
-    <fieldset><legend>FTK entry Information </legend>
-      <fieldset><legend>Information on the user</legend>
+         <fieldset><legend><b>FTK entry Information</b> </legend><br />
+    <fieldset><legend><b>Information on the user</b></legend>
      
       <label for="name_user">First name:</label>
       <?php  if (!empty($name_user)) echo $name_user; ?>
@@ -192,13 +192,14 @@ mysqli_close($dbc);
       <input type="hidden" id="email_user" name="email_user" value="<?php if (!empty($email_user)) echo $email_user; ?>" /><br />
           </fieldset>
     
-        
+        <br />
      
 
-        <fieldset><legend><b> FTK Stuff</b> </legend>
+        <fieldset><legend><b> Device information</b> </legend>
             
      <label for="type_device">Device type:</label>
                 <select name="type_device"  id="type_device">
+                    <option value="Select">Select</option>
                 <option value="Crate"<?php if (!empty($type_device) && $type_device == 'Crate') echo 'selected = "selected"'; ?>>Crate</option>
              <option value="PS"<?php if (!empty($type_device) && $type_device == 'PS') echo 'selected = "selected"'; ?>>PS</option>
              <option value="PC"<?php if (!empty($type_device) && $type_device == 'PC') echo 'selected = "selected"'; ?>>PC</option> 
@@ -227,7 +228,7 @@ mysqli_close($dbc);
             
              
      <select name="com_type"  id="com_type">
-
+            <option value="Select">Select</option>
              <option value="VP717"<?php if (!empty($com_type) && $com_type == 'VP717') echo 'selected = "selected"'; ?>>VP717</option>
              <option value="ATCA-F125"<?php if (!empty($com_type) && $com_type == 'ATCA-F125') echo 'selected = "selected"'; ?>>ATCA-F125</option>
              <option value="ATCA-SM"<?php if (!empty($com_type) && $com_type == 'ATCA-SM') echo 'selected = "selected"'; ?>>ATCA-SM</option>
@@ -247,47 +248,68 @@ mysqli_close($dbc);
     <br />
             
     <label for="com_id">    ID:</label>
-    <input type="int" maxlenght="4" size="4"  name="com_id" value="<?php if (!empty($com_id)) echo $com_id; ?>" /><br />
-    
-    <label for="location">Location:</label>
-    <!---<input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br /> -->
+    <input type="int" maxlenght="4" size="4"  name="com_id" value="<?php if (!empty($com_id)) echo $com_id; ?>" required /><br />
             
-     
+            
+               <label for="serial_number">Serial Number:</label>
+    <input type="serial_number" size="20" maxlength="30"  name="serial_number" value="<?php if (!empty($serial_number)) echo $serial_number; ?>" /><br />
+            <label for="owner">Owner:</label>
+    <input type="varchar" size="10" maxlength="20"  name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" /><br /><br />
+            
+            
+        <label for="prod_date">Production date:</label>
+    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />    
+         <label for="cern_receival_date">CERN receival date:</label>
+    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
+    
+   
+    <br />   
+            
+              <label for="status">Status:</label>
+                <select name="status"  id="status">
+                <option value="Select">Select</option>
+                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
+             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
+             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
+            </select><br />
+    
+    
+            
+            
+    
+            
+       </fieldset>
+        <br />
+        <fieldset><legend><b> Details </b> </legend>
+            
+               
+            
+            
+            
+   
+            
+             <label for="location">Location:</label>
             
     <select name="location"  id="location">
-
+            <option value="Select">Select</option>
              <option value="USA15"<?php if (!empty($location) && $location == 'USA15') echo 'selected = "selected"'; ?>>USA15</option>
              <option value="Lab4"<?php if (!empty($location) && $location == 'Lab4') echo 'selected = "selected"'; ?>>Lab4</option>
              <option value="Other"<?php if (!empty($location) && $location == 'Other') echo 'selected = "selected"'; ?>>Other</option>
              
 </select>
-    <br />        
+    <br />    
             
-            
-            
-    <label for="inst_status">Instalation status:</label>
+             <label for="inst_status">Instalation status:</label>
     <!--<input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />-->
     
     <select name="inst_status"  id="inst_status">
-
+            <option value="Select">Select</option>
              <option value="Installed"<?php if (!empty($inst_status) && $inst_status == 'Installed') echo 'selected = "selected"'; ?>>Installed</option>
              <option value="Spare"<?php if (!empty($inst_status) && $inst_status == 'Spare') echo 'selected = "selected"'; ?>>Spare</option>
             
              
 </select>
-    <br />              
-            
-            
-    <label for="cern_receival_date">CERN receival date:</label>
-    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
-    
-   
-    <label for="prod_date">Production date:</label>
-    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />
-            
-       </fieldset>
-        
-        <fieldset><legend><b> New Variables </b> </legend>
+    <br />   
             
             <label for="rack">Rack:</label>
     <input type="varchar" size="10" maxlength="20"  name="rack" value="<?php if (!empty($rack)) echo $rack; ?>" /><br />
@@ -298,27 +320,23 @@ mysqli_close($dbc);
             <label for="slot">Slot:</label>
     <input type="varchar" size="10" maxlength="20"  name="slot" value="<?php if (!empty($slot)) echo $slot; ?>" /><br />
             
-            <label for="owner">Owner:</label>
-    <input type="varchar" size="10" maxlength="20"  name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" /><br />
             
-            <label for="last_user">Last change:</label>
-    <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
+           
+            
+               <label for="firmware_version">Firmware version:</label>
+    <input type="firmware_version" size="10" maxlength="10"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br /><br />
             
            
             
        
           
             
-              <label for="status">Status:</label>
-                <select name="status"  id="status">
-                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
-             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
-             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
-            </select><br />
             
             <label for="notes">Notes:</label>
     <input type="text" size="150" maxlength="150"  name="notes" value="<?php if (!empty($notes)) echo $notes; ?>" /><br />
-            
+             
+            <label for="last_user">Last change:</label>
+    <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
             
             
            

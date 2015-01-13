@@ -91,6 +91,16 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
    
+ $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    $data = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_array($data);
+
+    if ($row != NULL) {
+      $name_user = $row['first_name'];
+      $surname_user = $row['last_name'];
+      $email_user = $row['email'];
+     }
+
 
  if (isset($_POST['submit'])) {
     // Grab the profile data from the POST
@@ -131,19 +141,7 @@ $enumList = explode(",", str_replace("'", "", substr($row['COLUMN_TYPE'], 5, (st
     
     //Grab the user data from the DB	
     
-    $query = "SELECT first_name,last_name,email FROM mismatch_user WHERE user_id = '" . $_SESSION['user_id'] . "'";
-    $data = mysqli_query($dbc, $query);
-    $row = mysqli_fetch_array($data);
-
-    if ($row != NULL) {
-      $name_user = $row['first_name'];
-      $surname_user = $row['last_name'];
-      $email_user = $row['email'];
-     }
-
-
    
-
  
 
 //getting the data into the DB 
@@ -254,8 +252,8 @@ mysqli_close($dbc);
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>"   
 
 
-    <fieldset><legend>FTK entry Information </legend>
-      <fieldset><legend>Information on the user</legend>
+         <fieldset><legend><b>FTK Entry Information</b> </legend></br>
+    <fieldset><legend><b>Information on the user</b></legend>
      
       <label for="name_user">First name:</label>
       <?php  if (!empty($name_user)) echo $name_user; ?>
@@ -268,39 +266,15 @@ mysqli_close($dbc);
       <input type="hidden" id="email_user" name="email_user" value="<?php if (!empty($email_user)) echo $email_user; ?>" /><br />
           </fieldset>
         
-       <!-- <fieldset><legend> Board Information</legend>
-      <label for="Module_ID">Module ID:</label>
-      <input type="text" name="id_module_A" maxlenght="2" size="2" value="<?php if (!empty($id_module_A)) echo $id_module_A; ?>"/> - <input type="text" name="id_module_B" maxlenght="2" size="2" value="<?php if (!empty($id_module_B)) echo $id_module_B; ?>" /> - <input type="text" name="id_module_C"   size="2" maxlenght="2" value="<?php if (!empty($id_module_C)) echo $id_module_C; ?>" />
-      <br />
-      <label for="module_type">Module Technology:</label>
-      <input type="radio" name="module_type" value="Planar" <?php if (!empty($module_type) && $module_type == 'Planar') echo 'checked="checked"'; ?> /> Planar 
-      <input type="radio" name="module_type" value="3D" <?php if (!empty($module_type) && $module_type == '3D') echo 'checked="checked"'; ?>/> 3D <br />
-      <label for="b_a_TH">Thermal Test:</label>
-      <input type="radio" name="b_a_TH" value="2" <?php if (!empty($b_a_TH) && $b_a_TH == '2') echo 'checked="checked"'; ?>/> Yes 
-      <input type="radio" name="b_a_TH" value="1" <?php if (!empty($b_a_TH) && $b_a_TH == '1') echo 'checked="checked"'; ?>/> No
-      <br />
-
-      </fieldset> -->
+    <br />
         
      
 
-        <fieldset><legend><b> FTK Stuff</b> </legend>
+        <fieldset><legend><b> Board Information</b> </legend>
     <label for="board_type">Board type:</label>
-    <!--<input type="enum" size="10" maxlength="20"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type; ?>" /><br />-->
-         
-      
-            
-  <!--     <select name="selType">
-        <?php   foreach( $enumList2 as $value)
-            echo "<option value=\"$value\" <?php if ($board_type==$value) {echo 'selected';}    ?>$value</option>"; ?>
-           <option value="<?php if (!empty($board_type)) echo $board_type ; ?>"> <?php echo $board_type?> </option>
-        </select> --> 
-            
-            
-      <!--<input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" /> :: [IM, DF, AUX, AMB, LAMB, SSB, SSB_RTM, DF_RTM, FLIC, FLIC_RTM]  <br \> -->   
-             
+   
      <select name="board_type"  id="board_type">
-
+             <option value="Select">Select</option>
              <option value="IM"<?php if (!empty($board_type) && $board_type == 'IM') echo 'selected = "selected"'; ?>>IM</option>
              <option value="DF"<?php if (!empty($board_type) && $board_type == 'DF') echo 'selected = "selected"'; ?>>DF</option>
              <option value="AUX"<?php if (!empty($board_type) && $board_type == 'AUX') echo 'selected = "selected"'; ?>>AUX</option>
@@ -317,15 +291,61 @@ mysqli_close($dbc);
     <br \>
             
     <label for="board_id">    ID:</label>
-    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>" /><br />
+    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>"  required /><br />
+            <label for="FPGA">FPGA:</label>
+    <input type="varchar" size="20" maxlength="20"  name="FPGA" value="<?php if (!empty($FPGA)) echo $FPGA; ?>" /><br />
+            <label for="owner">Owner:</label>
+    <input type="varchar" size="10" maxlength="20"  name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" /><br />
+            
+            
+    <br />
     
-    <label for="location">Location:</label>
+       <label for="prod_date">Production date:</label>
+    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />  
+            
+            
+    <label for="cern_receival_date">CERN receival date:</label>
+    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
+    
+    <label for="test_date">TEST date:</label>
+    <input type="date" size="10" maxlength="20"  name="test_date" value="<?php if (!empty($test_date)) echo $test_date; ?>" /><br /><br />
+            
+            
+              <label for="status">Status:</label>
+                <select name="status"  id="status">
+                    <option value="Select">Select</option>
+                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
+             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
+             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
+            </select><br />
+    
+   
+            
+       </fieldset><br />
+        
+        <fieldset><legend><b> Details </b> </legend>
+     
+                     
+    <label for="inst_status">Instalation status:</label>
+    <!--<input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />-->
+    
+    <select name="inst_status"  id="inst_status">
+            <option value="Select">Select</option>
+             <option value="Installed"<?php if (!empty($inst_status) && $inst_status == 'Installed') echo 'selected = "selected"'; ?>>Installed</option>
+             <option value="Spare"<?php if (!empty($inst_status) && $inst_status == 'Spare') echo 'selected = "selected"'; ?>>Spare</option>
+            
+             
+</select>
+    <br \>  
+            
+            
+            <label for="location">Location:</label>
     <!---<input type="enum" size="10" maxlength="20"  name="location" value="<?php if (!empty($location)) echo $location; ?>" />::[USA15, Lab4, Other]<br /> -->
             
      
             
     <select name="location"  id="location">
-
+            <option value="Select">Select</option>
              <option value="USA15"<?php if (!empty($location) && $location == 'USA15') echo 'selected = "selected"'; ?>>USA15</option>
              <option value="Lab4"<?php if (!empty($location) && $location == 'Lab4') echo 'selected = "selected"'; ?>>Lab4</option>
              <option value="Other"<?php if (!empty($location) && $location == 'Other') echo 'selected = "selected"'; ?>>Other</option>
@@ -334,32 +354,7 @@ mysqli_close($dbc);
     <br \>        
             
             
-            
-    <label for="inst_status">Instalation status:</label>
-    <!--<input type="enum" size="10" maxlength="20"  name="inst_status" value="<?php if (!empty($inst_status)) echo $inst_status; ?>" />::[Installed, Spare]<br />-->
-    
-    <select name="inst_status"  id="inst_status">
-
-             <option value="Installed"<?php if (!empty($inst_status) && $inst_status == 'Installed') echo 'selected = "selected"'; ?>>Installed</option>
-             <option value="Spare"<?php if (!empty($inst_status) && $inst_status == 'Spare') echo 'selected = "selected"'; ?>>Spare</option>
-            
-             
-</select>
-    <br \>              
-            
-            
-    <label for="cern_receival_date">CERN receival date:</label>
-    <input type="date" size="10" maxlength="20"  name="cern_receival_date" value="<?php if (!empty($cern_receival_date)) echo $cern_receival_date; ?>" /><br />
-    
-    <label for="test_date">TEST date:</label>
-    <input type="date" size="10" maxlength="20"  name="test_date" value="<?php if (!empty($test_date)) echo $test_date; ?>" /><br />
-    
-    <label for="prod_date">Production date:</label>
-    <input type="date" size="10" maxlength="20"  name="prod_date" value="<?php if (!empty($prod_date)) echo $prod_date; ?>" /><br />
-            
-       </fieldset>
-        
-        <fieldset><legend><b> New Variables </b> </legend>
+           
             
             <label for="rack">Rack:</label>
     <input type="varchar" size="10" maxlength="20"  name="rack" value="<?php if (!empty($rack)) echo $rack; ?>" /><br />
@@ -370,11 +365,9 @@ mysqli_close($dbc);
             <label for="slot">Slot:</label>
     <input type="varchar" size="10" maxlength="20"  name="slot" value="<?php if (!empty($slot)) echo $slot; ?>" /><br />
             
-            <label for="owner">Owner:</label>
-    <input type="varchar" size="10" maxlength="20"  name="owner" value="<?php if (!empty($owner)) echo $owner; ?>" /><br />
+        
             
-            <label for="last_user">Last change:</label>
-    <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
+           
             
             <label for="MB_SN">MB_SN:</label>
     <input type="varchar" size="10" maxlength="20"  name="MB_SN" value="<?php if (!empty($MB_SN)) echo $MB_SN; ?>" /><br />
@@ -382,25 +375,19 @@ mysqli_close($dbc);
              <label for="MB_Pos">MB_Pos:</label>
     <input type="smallint" size="1" maxlength="20"  name="MB_Pos" value="<?php if (!empty($MB_Pos)) echo $MB_Pos; ?>" /><br />
             
-            <label for="FPGA">FPGA:</label>
-    <input type="varchar" size="20" maxlength="20"  name="FPGA" value="<?php if (!empty($FPGA)) echo $FPGA; ?>" /><br />
+            
             
             <label for="firmware_version">Firmware Version:</label>
-    <input type="varchar" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br />
+    <input type="varchar" size="4" maxlength="20"  name="firmware_version" value="<?php if (!empty($firmware_version)) echo $firmware_version; ?>" /><br /><br />
             
              
-              <label for="status">Status:</label>
-                <select name="status"  id="status">
-                <option value="Unknown"<?php if (!empty($status) && $status == 'Unknown') echo 'selected = "selected"'; ?>>Unknown</option>
-             <option value="Good"<?php if (!empty($status) && $status == 'Good') echo 'selected = "selected"'; ?>>Good</option>
-             <option value="Bad"<?php if (!empty($status) && $status == 'Bad') echo 'selected = "selected"'; ?>>Bad</option> 
-            </select><br />
             
             <label for="notes">Notes:</label>
     <input type="text" size="150" maxlength="150"  name="notes" value="<?php if (!empty($notes)) echo $notes; ?>" /><br />
             
             
-            
+             <label for="last_user">Last change:</label>
+    <input type="last_user" size="20" maxlength="30"  name="last_user" value="<?php if (!empty($last_user)) echo $last_user; ?>" /><br />
             
             
             
@@ -413,7 +400,8 @@ mysqli_close($dbc);
     </fieldset>
     </fieldset>
     
-    <input type="submit" value="Save Module" name="submit" />
+    <br />
+    <input type="submit" value="Save Module"  name="submit"  />
   </form>
 </body> 
 </html>
