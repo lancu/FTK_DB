@@ -67,44 +67,61 @@ $enumList2=get_board_types($dbc);
 
 
 mysqli_close($dbc);
+
+//if (isset($_POST['submit'])) {
+  //      echo $searchphrase;
+    //                         }
+
 ?>
     
     
-<form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<!--<form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">-->
+<form enctype="multipart/form-data" method="post" action="search_action.php">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MM_MAXFILESIZE; ?>" />
     
     
        <fieldset><legend><b> FTK Stuff</b> </legend>
-    <label for="board_type">Board type:</label>
-    <!--<input type="enum" size="10" maxlength="20"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type; ?>" /><br />-->
+    
+           
+           
+    <!--<label for="board_type">Board type:</label>
+    <input type="enum" size="10" maxlength="20"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type; ?>" /><br />-->
          
       
             
-       <select name="selType">
-        <?php   foreach( $enumList2 as $value)
+<!--<select name="selType">
+<?php   foreach( $enumList2 as $value)
             echo "<option value=\"$value\" <?php if ($board_type==$value) {echo 'selected';}    ?>$value</option>"; ?>
            <option value="<?php if (!empty($board_type)) echo $board_type ; ?>"> <?php echo $board_type?> </option>
-        </select>
-    <!--  <input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" /> -->  <br \>    
+        </select>-->
+    
+           <!--  <input type="option"  name="board_type" value="<?php if (!empty($board_type)) echo $board_type ; ?>" />   <br \> -->    
              
      <label for="item_type">    Type:</label>
-     <select name="">
-  <option<?= $item_type== "bd" ? ' selected="selected"' : ''?>>Board</option>
-  <option<?= $item_type== "cb" ? ' selected="selected"' : ''?>>Cable</option>
-  <option<?= $item_type== "ot" ? ' selected="selected"' : ''?>>Other</option>
+     <select name="item_type" id="item_type">
+  
+         <!--<option value = ""<?php if(!empty($item_type) && $item_type == '') echo 'selected = "selected"'; ?>></option>-->
+         <option value = "bd"<?php if(!empty($item_type) && $item_type == 'bd') echo 'selected = "selected"'; ?>>Board</option>
+         <option value = "cb"<?php if(!empty($item_type) && $item_type == 'cb') echo 'selected = "selected"'; ?>>Cable</option>
+         <option value = "ot"<?php if(!empty($item_type) && $item_type == 'ot') echo 'selected = "selected"'; ?>>Other</option>
+  
 </select>
-    
+      
+           
+           
 <!--    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($item_type)) echo $item_type; ?>" /> --> <br />
            
            
     <label for="board_id">    ID:</label>
-    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>" /><br />
-    
-   
+    <input type="int" maxlenght="4" size="4"  name="board_id" value="<?php if (!empty($board_id)) echo $board_id; ?>" /> <br />
+  
+           <label for="searchphrase">Searchphrase:</label>
+    <input type="text" size="20" maxlength="20"  name="searchphrase" value="<?php if (!empty($searchphrase)) echo $searchphrase; ?>" /><br />
+              
                     
     </fieldset>
     
-     <input type="submit" value="Save Module" name="submit" />
+     <input type="submit" value="Search" name="submit" />
   </form>
 </body> 
 </html>
